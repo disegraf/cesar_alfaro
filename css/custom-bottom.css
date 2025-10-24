@@ -1,0 +1,187 @@
+:root {
+    /* ===== DIMENSIONES ===== */
+    --btn-w: 240px;           /* ancho */
+    --btn-h: 50px;            /* alto */
+    --border-size: 1px;       /* grosor del borde */
+    --radius: 12px;           /* radio del borde */
+
+    /* ===== COLORES ===== */
+    --color-bg: #0d0d0d;              /* fondo general */
+    --color-inner: #0b0000;           /* fondo interno del botón */
+    --color-fire-1: #ff3300;          /* rojo base */
+    --color-fire-2: #ff6600;          /* naranja intenso */
+    --color-fire-3: #ff9900;          /* amarillo fuego */
+    --color-glow-1: rgba(255, 120, 0, 0.9);
+    --color-glow-2: rgba(222, 30, 0, 0.7);
+    --color-glow-3: rgba(250, 197, 52, 0.7);
+    --color-text: #ffffff;
+    --color-text-hover: #fff3e0;
+
+    /* ===== FUENTE ===== */
+    --font-size: 12px;
+    --font-weight: 400;
+    --font-transform: uppercase;
+    --font-spacing: 1px;
+  }
+
+  /* ===== BOTÓN BASE ===== */
+  .fire-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--btn-w);
+    height: var(--btn-h);
+
+    border: none;
+    border-radius: var(--radius);
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-text);
+
+    font-size: var(--font-size);
+    font-weight: var(--font-weight);
+    text-transform: var(--font-transform);
+    letter-spacing: var(--font-spacing);
+    
+   
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .fire-button:hover { transform: translateY(-2px); }
+  .fire-button:active { transform: scale(0.98); }
+
+  .fire-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(255, 80, 0, 0.25);
+  }
+
+  /* ===== CAPAS DE BORDE Y GLOW ===== */
+  .animated-border-box,
+  .animated-border-box-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  
+
+  .animated-border-box-glow {
+    filter: blur(25px);
+    opacity: 0.9;
+    z-index: -2;
+  }
+
+  .animated-border-box::after {
+    content: "";
+    position: absolute;
+    inset: var(--border-size);
+    background: radial-gradient(circle at center, #2a0000 0%, var(--color-inner) 100%);
+    border-radius: calc(var(--radius) - var(--border-size));
+    z-index: 1;
+     background-image: url("../images/btn-background-2.gif");
+    background-size: cover;
+    background-position: center bottom;
+
+    box-shadow: 
+    0 0 10px 3px rgba(255, 111, 0, 0.4) inset;
+  -webkit-box-shadow: 
+    0 0 10px 3px rgba(255, 111, 0, 0.4) inset;
+  -moz-box-shadow: 
+    0 0 10px 3px rgba(255, 111, 0, 0.4) inset;
+
+  animation: innerGlowPulse 3s ease-in-out infinite;
+
+  }
+
+
+  @keyframes innerGlowPulse {
+  0% {
+    box-shadow: 
+      0 0 10px 3px rgba(255, 111, 0, 0.25) inset;
+  }
+  50% {
+    box-shadow: 
+      0 0 14px 5px rgba(255, 111, 0, 0.5) inset;
+  }
+  100% {
+    box-shadow: 
+      0 0 10px 3px rgba(255, 111, 0, 0.25) inset;
+  }
+}
+
+  /* ===== GRADIENTES ANIMADOS ===== */
+  .animated-border-box::before,
+  .animated-border-box-glow::before {
+    content: "";
+    position: absolute;
+    width: 200vmax;
+    height: 200vmax;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    animation: rotate 3s linear infinite;
+    z-index: -3;
+  }
+
+  .animated-border-box::before {
+    background-image: conic-gradient(
+      from 0deg,
+      rgba(0, 0, 0, 0),
+      var(--color-fire-1),
+      var(--color-fire-2),
+      var(--color-fire-3),
+      var(--color-fire-1),
+      rgba(0, 0, 0, 0) 25%
+    );
+  }
+
+  .animated-border-box-glow::before {
+    background-image: conic-gradient(
+      from 0deg,
+      rgba(0, 0, 0, 0),
+      var(--color-glow-1),
+      var(--color-glow-2),
+      var(--color-glow-3),
+      rgba(0, 0, 0, 0) 25%
+    );
+  }
+
+  @keyframes rotate {
+    to { transform: translate(-50%, -50%) rotate(1turn); }
+  }
+
+  /* ===== TEXTO ===== */
+  .btn-text {
+    position: relative;
+    z-index: 2;
+    user-select: none;
+    text-shadow: 0 0 10px var(--color-fire-1),
+                 0 0 20px var(--color-fire-2);
+
+                 
+  }
+
+  /* ===== EFECTO HOVER FLAMA ===== */
+  .fire-button:hover .btn-text {
+    color: var(--color-text-hover);
+    text-shadow: 0 0 20px var(--color-fire-1),
+                 0 0 40px var(--color-fire-2);
+  }
+
+  /* ===== RESPONSIVO ===== */
+  @media (max-width:420px) {
+    :root {
+      --btn-w: 90%;
+      --btn-h: 50px;
+      --border-size: 1px;
+      --radius: 15px;
+      --font-size: 12px;
+    }
+  }
